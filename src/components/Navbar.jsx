@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from './Logo';
 import Wrapper from 'assets/wrappers/Navbar';
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
@@ -12,6 +12,25 @@ const Navbar = () => {
   const toggle = () => {
     dispatch(toggleSidebar());
   };
+
+  const onClickOutside = (e) => {
+    // https://github.com/Yoctol/react-messenger-customer-chat/pull/32
+    // Instance of SVGAnimatedString does not have method of includes
+    if (
+      typeof e.target.className === 'string' &&
+      !e.target.className.includes('log-in-out')
+    ) {
+      setShowLogout(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', onClickOutside);
+    return () => {
+      window.removeEventListener('click', onClickOutside);
+    };
+  }, [showLogout]);
+
   return (
     <Wrapper>
       <div className='nav-center'>
@@ -25,7 +44,7 @@ const Navbar = () => {
         <div className='btn-container'>
           <button
             type='button'
-            className='btn'
+            className='btn log-in-out'
             onClick={() => setShowLogout(!showLogout)}
           >
             <FaUserCircle /> {user?.name}
