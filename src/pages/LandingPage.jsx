@@ -27,7 +27,7 @@ const LandingPage = () => {
             Login/Register
           </Link>
         </div>
-        <img src={main} alt='job hunt' srcset='' className='img main-img' />
+        <img src={main} alt='job hunt' srcSet='' className='img main-img' />
       </div>
     </Wrapper>
   );
